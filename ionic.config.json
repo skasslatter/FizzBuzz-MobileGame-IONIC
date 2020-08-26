@@ -1,5 +1,7 @@
 {
   "name": "FIZZ BUZZ",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

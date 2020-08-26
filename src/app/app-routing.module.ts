@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'rules',
+    loadChildren: () => import('./rules/rules.module').then( m => m.RulesPageModule)
+  },
+  {
+    path: 'play',
+    loadChildren: () => import('./play/game.module').then(m => m.GamePageModule)
+  },
+  {
+    path: 'highscore',
+    loadChildren: () => import('./highscore/highscore.module').then( m => m.HighscorePageModule)
+  },
 ];
 
 @NgModule({
