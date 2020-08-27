@@ -6,54 +6,67 @@
 
 <ion-content>
     <section>
-        <div *ngIf="!isRunning">
-            <ion-button (click)="startGame()">START</ion-button>
-        </div>
-
-        <div *ngIf="isRunning">
-            <ion-button (click)="stopGame()">RESET</ion-button>
-        </div>
+        <ion-grid>
+            <ion-row class="ion-text-center start">
+                <ion-col *ngIf="!isRunning" >
+                    <ion-button (click)="startGame()">START</ion-button>
+                </ion-col>
+                <ion-col *ngIf="isRunning">
+                    <ion-button (click)="stopGame()">RESET</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </section>
 
     <section [ngClass]="!isRunning ? 'hidden' : 'visible' ">
-        <div>
-            <h2>{{numbers$ | async}}</h2>
-        </div>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <div class="number">
+                        <h2 >{{numbers$ | async}}</h2>
+                    </div>
 
-        <div class="fizzBuzz-game">
-            <div class="game-controller">
-                <p class="digital secondary-color">{{countDown | time}}</p>
-                <p>Score: <span class="secondary-color">{{userScore$ | async}}</span></p>
-            </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="ion-text-center">
+                    <p>{{countDown | time}}</p>
+                </ion-col>
+                <ion-col class="ion-text-center">
+                    <p>Score: {{userScore$ | async}}</p>
+                </ion-col>
+            </ion-row>
 
-            <div class="fizzBuzz-buttons">
-                <ion-button id="nr-btn" class="btn">{{numbers$ | async}}</ion-button>
-                <ion-button id="fizz-btn" class="btn">Fizz</ion-button>
-                <ion-button id="buzz-btn" class="btn">Buzz</ion-button>
-                <ion-button id="fizzBuzz-btn" class="btn">FizzBuzz</ion-button>
-            </div>
+            <ion-row>
+                <ion-col class="ion-text-center">
+                    <ion-button id="nr-btn">{{numbers$ | async}}</ion-button>
+                    <ion-button id="fizz-btn">Fizz</ion-button>
+                    <ion-button id="buzz-btn">Buzz</ion-button>
+                    <ion-button id="fizzBuzz-btn">FizzBuzz</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
 
+        <ion-grid class="history">
             <div>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col>Number</ion-col>
-                        <ion-col>Correct Answer</ion-col>
-                        <ion-col>Your Answer</ion-col>
-                        <ion-col></ion-col>
-                    </ion-row>
-                    <ion-row *ngFor="let historyItem of history$ | async">
-                        <ion-col>{{historyItem.num}}</ion-col>
-                        <ion-col>{{historyItem.correctAnswer}}</ion-col>
-                        <ion-col>{{historyItem.givenAnswer}}</ion-col>
-                        <ion-col>
-                            <span *ngIf="historyItem.isCorrect" class="correct"> Well done!</span>
-                            <span *ngIf="!historyItem.isCorrect" class="wrong"> Wrong</span>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-
+            <ion-row class="ion-text-center heading">
+                <ion-col>Number</ion-col>
+                <ion-col>Correct Answer</ion-col>
+                <ion-col>Your Answer</ion-col>
+                <ion-col></ion-col>
+            </ion-row>
+            <ion-row class="ion-text-center results" *ngFor="let historyItem of history$ | async">
+                <ion-col>{{historyItem.num}}</ion-col>
+                <ion-col>{{historyItem.correctAnswer}}</ion-col>
+                <ion-col>{{historyItem.givenAnswer}}</ion-col>
+                <ion-col>
+                    <span *ngIf="historyItem.isCorrect" class="correct"> Nice!</span>
+                    <span *ngIf="!historyItem.isCorrect" class="wrong"> Wrong</span>
+                </ion-col>
+            </ion-row>
             </div>
-        </div>
+        </ion-grid>
+
     </section>
 
 </ion-content>

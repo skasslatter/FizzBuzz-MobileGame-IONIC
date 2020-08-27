@@ -1,4 +1,4 @@
-ion-content{
+ion-content {
   --background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1532446997697-0b92fdc456fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1250&q=80");
 }
 
@@ -10,3 +10,43 @@ ion-content{
   visibility: visible;
 }
 
+.start {
+  margin-top: 15vh;
+}
+
+.number {
+  box-sizing: content-box;
+  text-align: center;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  padding: 18px;
+  border: 2px solid var(--ion-color-secondary);
+  background-color: rgba(255, 255, 255, 0.9);
+  margin: auto;
+  color: var(--ion-color-primary)
+}
+
+ion-row {
+  margin: 2vh;
+}
+
+ion-button {
+  --background: var(--ion-color-tertiary);
+}
+
+.history {
+  text-align: -webkit-center;
+  div {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: fit-content;
+    text-align: -webkit-center;
+  }
+  .heading {
+    color: var(--ion-color-secondary)
+  }
+
+  .results {
+    color: var(--ion-color-primary)
+  }
+}
