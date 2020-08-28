@@ -19,5 +19,19 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
+  },
+  "paths": {
+    "@app-pages/*": [
+      "scr/app/pages/*"
+    ],
+    "@app-models/*": [
+      "scr/app/models/*"
+    ],
+    "@app-service/*": [
+      "scr/app/services/*"
+    ],
+    "@app-pipes/*": [
+      "scr/app/pipes/*"
+    ]
   }
 }

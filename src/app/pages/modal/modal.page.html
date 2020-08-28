@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons fill="outline" slot="end">
+            <ion-button (click)="dismiss()">
+                Close
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col class="ion-text-center">
+                <h1>Game over</h1>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="ion-text-center">
+                <p>Your score is {{score}}</p>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <p *ngIf="isNewHighScore()">New highscore!</p>
+                <p *ngIf="!isNewHighScore()">no new highscore</p>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>
