@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {first, map, mapTo, scan, share, switchMap, takeLast} from 'rxjs/operators';
 import {fromEvent, interval, merge, Observable, Subscription, zip} from 'rxjs';
 import {CountDownService, FizzBuzzService} from "../../services";
@@ -32,6 +32,7 @@ export class GamePage implements OnInit {
     userScore$: Observable<number>;
     lives: number = 3;
     userLives: number = 3;
+    errors$: Observable<number>;
 
     constructor(
         private fizzBuzzService: FizzBuzzService,
@@ -86,14 +87,16 @@ export class GamePage implements OnInit {
                 return givenAnswer === correctAnswer || (isNumber(correctAnswer) && givenAnswer === 'Number');
             }));
 
-         this.mistakeSubscription = isCorrect$.pipe(
+        this.errors$ = isCorrect$.pipe(
             scan((errors, isCorrect) => {
                 if (!isCorrect) {
                     errors++;
-                    this.userLives--;
                 }
                 return errors;
-            }, 0))
+            }, 0)
+        )
+
+        this.mistakeSubscription = this.errors$
             .subscribe((errors) => {
                 if (errors >= this.lives) {
                     console.log("Fail");
@@ -101,6 +104,7 @@ export class GamePage implements OnInit {
                     this.stopGame()
                 }
             })
+
 
         this.userScore$ = isCorrect$.pipe(
             scan((score, isCorrect) => {
@@ -127,7 +131,7 @@ export class GamePage implements OnInit {
     }
 
     stopGame(): void {
-        if (this.countDownSubscription){
+        if (this.countDownSubscription) {
             this.countDownSubscription.unsubscribe();
         }
         this.isRunning = false;
