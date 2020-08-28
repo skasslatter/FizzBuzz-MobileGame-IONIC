@@ -34,6 +34,7 @@
                 </ion-col>
                 <ion-col class="ion-text-center">
                     <p>Score: {{userScore$ | async}}</p>
+                    <p>Lives: {{userLives}}</p>
                 </ion-col>
             </ion-row>
 
@@ -53,15 +54,16 @@
                 <ion-col>Number</ion-col>
                 <ion-col>Correct Answer</ion-col>
                 <ion-col>Your Answer</ion-col>
-                <ion-col></ion-col>
+                <ion-col>Score</ion-col>
             </ion-row>
             <ion-row class="ion-text-center results" *ngFor="let historyItem of history$ | async">
                 <ion-col>{{historyItem.num}}</ion-col>
                 <ion-col>{{historyItem.correctAnswer}}</ion-col>
                 <ion-col>{{historyItem.givenAnswer}}</ion-col>
                 <ion-col>
-                    <span *ngIf="historyItem.isCorrect" class="correct"> Nice!</span>
-                    <span *ngIf="!historyItem.isCorrect" class="wrong"> Wrong</span>
+                    {{historyItem.score}}
+<!--                    <span *ngIf="historyItem.isCorrect" class="correct"> Nice!</span>-->
+<!--                    <span *ngIf="!historyItem.isCorrect" class="wrong"> Wrong</span>-->
                 </ion-col>
             </ion-row>
             </div>

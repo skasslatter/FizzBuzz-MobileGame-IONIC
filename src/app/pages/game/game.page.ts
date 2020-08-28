@@ -17,6 +17,7 @@ function isNumber(val: string): boolean {
 export class GamePage implements OnInit {
     FizzBuzzSubscription: Subscription;
     countDownSubscription: Subscription;
+    mistakeSubscription: Subscription;
 
     private nrInput$: Observable<Event>;
     private fizzInput$: Observable<Event>;
@@ -25,9 +26,12 @@ export class GamePage implements OnInit {
 
     isRunning = false;
     countDown: number;
-    userScore$: Observable<number>;
     numbers$: Observable<number>;
     history$: Observable<History[]>;
+
+    userScore$: Observable<number>;
+    lives: number = 3;
+    userLives: number = 3;
 
     constructor(
         private fizzBuzzService: FizzBuzzService,
@@ -65,7 +69,6 @@ export class GamePage implements OnInit {
     startGame(): void {
         this.isRunning = true;
         const fizzBuzz$ = this.fizzBuzzService.get();
-
         const game$ = zip<[Choice, Choice]>(
             fizzBuzz$,
             fizzBuzz$.pipe(switchMap(() =>
@@ -83,6 +86,22 @@ export class GamePage implements OnInit {
                 return givenAnswer === correctAnswer || (isNumber(correctAnswer) && givenAnswer === 'Number');
             }));
 
+         this.mistakeSubscription = isCorrect$.pipe(
+            scan((errors, isCorrect) => {
+                if (!isCorrect) {
+                    errors++;
+                    this.userLives--;
+                }
+                return errors;
+            }, 0))
+            .subscribe((errors) => {
+                if (errors >= this.lives) {
+                    console.log("Fail");
+                    this.mistakeSubscription.unsubscribe();
+                    this.stopGame()
+                }
+            })
+
         this.userScore$ = isCorrect$.pipe(
             scan((score, isCorrect) => {
                 if (isCorrect) {
@@ -94,10 +113,11 @@ export class GamePage implements OnInit {
         this.history$ = zip(
             this.numbers$,
             game$,
-            isCorrect$
+            isCorrect$,
+            this.userScore$,
         )
-            .pipe(map(([num, [correctAnswer, givenAnswer], isCorrect]) => {
-                return {num, correctAnswer, givenAnswer, isCorrect} as History;
+            .pipe(map(([num, [correctAnswer, givenAnswer], isCorrect, score]) => {
+                return {num, correctAnswer, givenAnswer, isCorrect, score} as History;
             }))
             .pipe(scan((acc: History[], historyItem) => {
                     acc.unshift(historyItem);
