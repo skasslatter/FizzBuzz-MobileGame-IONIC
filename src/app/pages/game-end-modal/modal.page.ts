@@ -28,8 +28,7 @@ export class ModalPage implements OnInit {
                     this.storage.set('highscore', this.score)
                     this.highscore = this.score
                     this.isNewHighScore = true
-                }
-                else {
+                } else {
                     this.highscore = value
                     this.isNewHighScore = false
                 }
