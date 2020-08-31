@@ -1,9 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Highscore</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Highscore</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="home">
+    <ion-grid>
+        <ion-row class="ion-text-center">
+            <ion-button (click)="captureImage()">
+                Click to take a selfie!
+            </ion-button>
+        </ion-row>
+        <ion-row class="ion-text-center">
+            <ion-col>
+                <p>Current Highscore holder</p>
+                <img [src]="clickedImage" *ngIf="clickedImage" alt="photo"/>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
