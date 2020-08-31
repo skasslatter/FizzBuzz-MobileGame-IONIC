@@ -57,8 +57,8 @@ const routes: Routes = [{
         pathMatch: 'full'
     },
   {
-    path: 'modal',
-    loadChildren: () => import('./pages/modal/modal.module').then(m => m.ModalPageModule)
+    path: 'game-end-modal',
+    loadChildren: () => import('./pages/game-end-modal/modal.module').then(m => m.ModalPageModule)
   }
 ]
 //   {

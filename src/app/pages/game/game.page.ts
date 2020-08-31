@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {first, map, mapTo, scan, share, switchMap, take, takeLast} from 'rxjs/operators';
+import {first, map, mapTo, scan, share, switchMap, takeLast} from 'rxjs/operators';
 import {fromEvent, interval, merge, Observable, Subscription, zip} from 'rxjs';
 import {CountDownService, FizzBuzzService} from "../../services";
 import {Choice, History} from "../../models";
 import {ModalController} from "@ionic/angular";
-import {ModalPage} from "../modal/modal.page";
+import {ModalPage} from "../game-end-modal/modal.page";
 
 function isNumber(val: string): boolean {
     return !isNaN(Number(val));
@@ -14,32 +14,33 @@ function isNumber(val: string): boolean {
     selector: 'app-game',
     templateUrl: './game.page.html',
     styleUrls: ['./game.page.scss'],
-
 })
+
 export class GamePage implements OnInit {
-    countDownSubscription: Subscription;
-    mistakeSubscription: Subscription;
+    private countDownSubscription: Subscription;
+    private mistakeSubscription: Subscription;
+    private userScoreSubscription: Subscription;
 
     private nrInput$: Observable<Event>;
     private fizzInput$: Observable<Event>;
     private buzzInput$: Observable<Event>;
     private fizzBuzzInput$: Observable<Event>;
 
-    isRunning = false;
-    countDown: number;
     numbers$: Observable<number>;
     history$: Observable<History[]>;
-
-    userScore$: Observable<number>;
-    lives: number = 3;
-    userLives: number = 3;
     errors$: Observable<number>;
-    private currentUserScore: number;
+    userScore$: Observable<number>;
+
+    isRunning = false;
+    countDown: number;
+    lives: number = 3;
+    userLives: number = this.lives;
+    currentUserScore: number;
 
     constructor(
         private fizzBuzzService: FizzBuzzService,
         private countDownService: CountDownService,
-        private modalCtrl: ModalController
+        private modalCtrl: ModalController,
     ) {
     }
 
@@ -55,7 +56,16 @@ export class GamePage implements OnInit {
     }
 
     getUserInput(): Observable<Choice> {
-        this.startCountDown();
+        if (this.countDownSubscription) {
+            this.countDownSubscription.unsubscribe();
+        }
+        this.countDownSubscription = this.countDownService
+            .get()
+            .subscribe(response => {
+                console.log("countdown", response)
+                this.countDown = response;
+            });
+
         const timerDuration = 5000;
         return merge(
             this.nrInput$.pipe(mapTo('Number')),
@@ -70,6 +80,7 @@ export class GamePage implements OnInit {
     }
 
     startGame(): void {
+        this.currentUserScore = 0;
         this.isRunning = true;
         const fizzBuzz$ = this.fizzBuzzService.get();
         const game$ = zip<[Choice, Choice]>(
@@ -101,9 +112,10 @@ export class GamePage implements OnInit {
         this.mistakeSubscription = this.errors$
             .subscribe((errors) => {
                 if (errors >= this.lives) {
-                    this.openModal(this.currentUserScore).then(r =>
-                        this.mistakeSubscription.unsubscribe())
-                    this.stopGame()
+                    this.openModal(this.currentUserScore)
+                        .then(r =>
+                            this.stopGame()
+                        )
                 }
             })
 
@@ -114,7 +126,8 @@ export class GamePage implements OnInit {
                 }
                 return score;
             }, 0));
-        this.userScore$.subscribe(value => {
+
+        this.userScoreSubscription = this.userScore$.subscribe(value => {
             this.currentUserScore = value;
         })
 
@@ -138,23 +151,21 @@ export class GamePage implements OnInit {
         if (this.countDownSubscription) {
             this.countDownSubscription.unsubscribe();
         }
-        this.isRunning = false;
-    }
-
-    startCountDown(): void {
-        if (this.countDownSubscription
-        ) {
-            this.countDownSubscription.unsubscribe();
+        if (this.mistakeSubscription) {
+            this.mistakeSubscription.unsubscribe();
         }
-        this.countDownSubscription = this.countDownService
-            .get()
-            .subscribe(response => {
-                this.countDown = response;
-            });
+        if (this.userScoreSubscription) {
+            this.userScoreSubscription.unsubscribe();
+        }
+        this.isRunning = false;
+        this.numbers$ = undefined;
+        this.history$ = undefined;
+        this.errors$ = undefined;
+        this.userScore$ = undefined;
+        this.currentUserScore = 0;
     }
 
     async openModal(currentUserScore: number): Promise<any> {
-        console.log("passed on", currentUserScore)
         const modal = await this.modalCtrl.create({
             component: ModalPage,
             componentProps: {
