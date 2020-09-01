@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {Camera, CameraOptions} from "@ionic-native/camera/ngx";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-modal',
@@ -10,8 +11,9 @@ import {Camera, CameraOptions} from "@ionic-native/camera/ngx";
 })
 
 export class ModalPage implements OnInit {
-    clickedPhoto: string;
+    userPhoto: string;
     highscoreHolderPhoto: string;
+
     options: CameraOptions = {
         quality: 30,
         destinationType: this.camera.DestinationType.DATA_URL,
@@ -19,13 +21,14 @@ export class ModalPage implements OnInit {
         mediaType: this.camera.MediaType.PICTURE
     }
     score: number;
-    highscore: number = null;
+    highscores: number = null;
     isNewHighScore: boolean = false;
 
     constructor(
         private modalCtrl: ModalController,
         private storage: Storage,
         private camera: Camera,
+        private router: Router,
     ) {
     }
 
@@ -38,18 +41,53 @@ export class ModalPage implements OnInit {
                 console.log(err);
             })
 
+        // this.storage.get('highscores')
+        //     .then((scores) => {
+        //         const allScores = JSON.parse(scores)
+        //         if (allScores === null) {
+        //             this.storage.set('highscores', JSON.stringify([{score: this.score}]))
+        //                 .then((r) => {
+        //                     this.highscores = this.score
+        //                     this.isNewHighScore = true
+        //                 })
+        //         } else if (this.score > allScores[0].score) {
+        //
+        //         } else {
+        //             this.highscores = allScores[0].score
+        //             this.isNewHighScore = false
+        //         }
+        //     }, (err) => {
+        //         console.log(err);
+        //     })
+
         this.storage.get('highscore')
-            .then(value => {
-                if (value === null || this.score > value) {
-                    this.storage.set('highscore', this.score)
-                        .then((r) => {
-                            this.highscore = this.score
-                            this.isNewHighScore = true
-                        })
-                } else {
-                    this.highscore = value
-                    this.isNewHighScore = false
-                }
+            .then((value) => {
+                    if (value === null || this.score > value) {
+                        this.storage.set('highscore', this.score)
+                            .then((r) => {
+                                this.highscores = this.score
+                                this.isNewHighScore = true
+                            })
+                    } else {
+                        this.highscores = value
+                        this.isNewHighScore = false
+                    }
+                },
+                (err) => {
+                    console.log(err);
+                })
+    }
+
+    captureImage() {
+        this.camera.getPicture(this.options)
+            .then((imageData) => {
+                this.userPhoto = 'data:image/jpeg;base64,' + imageData;
+                // this.storage.set('highscores', JSON.stringify([{photo: this.userPhoto}]))
+                this.storage.set('photo', this.userPhoto)
+                    .then((r) => {
+                        this.highscoreHolderPhoto = this.userPhoto
+                        this.router.navigate(['/highscores']);
+                    })
             }, (err) => {
                 console.log(err);
             });
@@ -57,18 +95,5 @@ export class ModalPage implements OnInit {
 
     dismissModal() {
         this.modalCtrl.dismiss();
-    }
-
-    captureImage() {
-        this.camera.getPicture(this.options)
-            .then((imageData) => {
-                this.clickedPhoto = 'data:image/jpeg;base64,' + imageData;
-                this.storage.set('photo', this.clickedPhoto)
-                    .then((r) => {
-                        this.highscoreHolderPhoto = this.clickedPhoto
-                    })
-            }, (err) => {
-                console.log(err);
-            });
     }
 }

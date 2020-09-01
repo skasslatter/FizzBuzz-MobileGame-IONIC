@@ -7,15 +7,15 @@
 <ion-content class="home">
     <ion-grid>
         <ion-row class="ion-text-center">
-            <ion-button (click)="captureImage()">
-                Click to take a selfie!
-            </ion-button>
-        </ion-row>
-        <ion-row class="ion-text-center">
-            <ion-col>
-                <p>Current Highscore holder</p>
-                <img [src]="clickedImage" *ngIf="clickedImage" alt="photo"/>
+            <ion-col *ngIf="!highscore">
+                <p>No highscores yet</p>
             </ion-col>
+            <ion-col *ngIf="highscore">
+                <p>Highscore: {{highscore}}</p>
+                <p>Current Highscore holder</p>
+                <img [src]="photo" *ngIf="photo" alt="photo"/>
+            </ion-col>
+
         </ion-row>
     </ion-grid>
 </ion-content>

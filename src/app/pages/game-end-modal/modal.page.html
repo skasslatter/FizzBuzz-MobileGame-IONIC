@@ -16,29 +16,34 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col class="ion-text-center">
-                <p *ngIf="isNewHighScore">🥳 New highscore! </p>
-                <p *ngIf="!isNewHighScore">😢 No new highscore</p>
-            </ion-col>
             <ion-col class="ion-text-center" size="12">
                 <p>Your score:</p>
                 <p class="score">{{score}}</p>
             </ion-col>
-        </ion-row>
-        <ion-row>
             <ion-col class="ion-text-center">
                 <p>Highscore: </p>
-                <p class="score">{{highscore}}</p>
+                <p class="score">{{highscores}}</p>
             </ion-col>
-            <ion-col>
-                <p>Highscore holder:</p>
-                <img [src]="highscoreHolderPhoto" *ngIf="highscoreHolderPhoto" alt="photo"/>
-            </ion-col>
-            <ion-row *ngIf="isNewHighScore" class="ion-text-center">
+        </ion-row>
+        <ion-row class="ion-text-center">
+            <ion-col *ngIf="isNewHighScore">
+                <p>🥳 New highscores! </p>
                 <ion-button (click)="captureImage()">
-                    Click to take a selfie!
+                    Take a Winner selfie!
                 </ion-button>
-            </ion-row>
+            </ion-col>
+            <ion-col *ngIf="!isNewHighScore">
+                <p>😢 No new highscores</p>
+                <ion-button (click)="dismissModal()">
+                    Try again
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <!--            <ion-col>-->
+            <!--                <p>Highscore holder:</p>-->
+            <!--                <img [src]="highscoreHolderPhoto" *ngIf="highscoreHolderPhoto" alt="photo"/>-->
+            <!--            </ion-col>-->
         </ion-row>
     </ion-grid>
 

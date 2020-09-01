@@ -25,7 +25,7 @@ const routes: Routes = [{
             ]
         },
         {
-            path: 'highscore',
+            path: 'highscores',
             children: [
                 {
                     path: '',
@@ -61,28 +61,6 @@ const routes: Routes = [{
     loadChildren: () => import('./pages/game-end-modal/modal.module').then(m => m.ModalPageModule)
   }
 ]
-//   {
-//     path: 'home',
-//     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-//   },
-//   {
-//     path: '',
-//     redirectTo: 'home',
-//     pathMatch: 'full'
-//   },
-//   {
-//     path: 'rules',
-//     loadChildren: () => import('./pages/rules/rules.module').then(m => m.RulesPageModule)
-//   },
-//   {
-//     path: 'play',
-//     loadChildren: () => import('./pages/game/game.module').then(m => m.GamePageModule)
-//   },
-//   {
-//     path: 'highscore',
-//     loadChildren: () => import('./pages/highscore/highscore.module').then(m => m.HighscorePageModule)
-//   },
-// ];
 
 @NgModule({
     imports: [
