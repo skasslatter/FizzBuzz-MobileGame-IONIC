@@ -7,13 +7,13 @@
 <ion-content class="home">
     <ion-grid>
         <ion-row class="ion-text-center">
-            <ion-col *ngIf="!highscore">
+            <ion-col *ngIf="!highscoreHistory">
                 <p>No highscores yet</p>
             </ion-col>
-            <ion-col *ngIf="highscore">
-                <p>Highscore: {{highscore}}</p>
+            <ion-col *ngIf="highscoreHistory">
+                <p>Current Highscore: {{highscoreHistory[0].score}}</p>
                 <p>Current Highscore holder</p>
-                <img [src]="photo" *ngIf="photo" alt="photo"/>
+                <img [src]="highscoreHistory[0].photo" *ngIf="highscoreHistory[0].photo" alt="photo"/>
             </ion-col>
 
         </ion-row>

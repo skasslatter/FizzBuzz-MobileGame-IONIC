@@ -22,18 +22,18 @@
             </ion-col>
             <ion-col class="ion-text-center">
                 <p>Highscore: </p>
-                <p class="score">{{highscores}}</p>
+                <p class="score">{{highscore}}</p>
             </ion-col>
         </ion-row>
         <ion-row class="ion-text-center">
             <ion-col *ngIf="isNewHighScore">
-                <p>🥳 New highscores! </p>
+                <p>🥳 New highscore! </p>
                 <ion-button (click)="captureImage()">
                     Take a Winner selfie!
                 </ion-button>
             </ion-col>
             <ion-col *ngIf="!isNewHighScore">
-                <p>😢 No new highscores</p>
+                <p>😢 No new highscore</p>
                 <ion-button (click)="dismissModal()">
                     Try again
                 </ion-button>

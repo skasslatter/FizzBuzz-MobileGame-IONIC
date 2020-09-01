@@ -12,7 +12,6 @@ import {Router} from "@angular/router";
 
 export class ModalPage implements OnInit {
     userPhoto: string;
-    highscoreHolderPhoto: string;
 
     options: CameraOptions = {
         quality: 30,
@@ -21,7 +20,7 @@ export class ModalPage implements OnInit {
         mediaType: this.camera.MediaType.PICTURE
     }
     score: number;
-    highscores: number = null;
+    highscore: number = null;
     isNewHighScore: boolean = false;
 
     constructor(
@@ -34,43 +33,29 @@ export class ModalPage implements OnInit {
 
     ngOnInit() {
         // this.storage.clear();
-        this.storage.get('photo')
-            .then((photo) => {
-                this.highscoreHolderPhoto = photo
-            }, (err) => {
-                console.log(err);
-            })
 
-        // this.storage.get('highscores')
-        //     .then((scores) => {
-        //         const allScores = JSON.parse(scores)
-        //         if (allScores === null) {
-        //             this.storage.set('highscores', JSON.stringify([{score: this.score}]))
-        //                 .then((r) => {
-        //                     this.highscores = this.score
-        //                     this.isNewHighScore = true
-        //                 })
-        //         } else if (this.score > allScores[0].score) {
-        //
-        //         } else {
-        //             this.highscores = allScores[0].score
-        //             this.isNewHighScore = false
-        //         }
-        //     }, (err) => {
-        //         console.log(err);
-        //     })
-
-        this.storage.get('highscore')
+        this.storage.get('scoreHistory')
             .then((value) => {
-                    if (value === null || this.score > value) {
-                        this.storage.set('highscore', this.score)
-                            .then((r) => {
-                                this.highscores = this.score
-                                this.isNewHighScore = true
-                            })
+                    if (!value) {
+                        this.isNewHighScore = true;
+                        this.highscore = this.score;
+                        this.storage.set('scoreHistory', JSON.stringify([{
+                            score: this.score
+                        }]))
                     } else {
-                        this.highscores = value
-                        this.isNewHighScore = false
+                        const history = JSON.parse(value);
+                        const latestHighScore = history[0].score;
+                        if (this.score > latestHighScore) {
+                            this.isNewHighScore = true;
+                            this.highscore = this.score;
+                            this.storage.set('scoreHistory', JSON.stringify([
+                                {score: this.score},
+                                ...history
+                            ]))
+                        } else {
+                            this.isNewHighScore = false;
+                            this.highscore = latestHighScore;
+                        }
                     }
                 },
                 (err) => {
@@ -82,11 +67,15 @@ export class ModalPage implements OnInit {
         this.camera.getPicture(this.options)
             .then((imageData) => {
                 this.userPhoto = 'data:image/jpeg;base64,' + imageData;
-                // this.storage.set('highscores', JSON.stringify([{photo: this.userPhoto}]))
-                this.storage.set('photo', this.userPhoto)
-                    .then((r) => {
-                        this.highscoreHolderPhoto = this.userPhoto
-                        this.router.navigate(['/highscores']);
+                this.storage.get('scoreHistory')
+                    .then(value => {
+                        const history = JSON.parse(value);
+                        history[0].photo = this.userPhoto;
+                        this.storage.set('scoreHistory', JSON.stringify(history))
+                            .then(r => {
+                                this.router.navigate(['/highscores']);
+                                this.dismissModal()
+                            })
                     })
             }, (err) => {
                 console.log(err);
