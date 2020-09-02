@@ -1,3 +1,13 @@
-b {
-  color: var(--ion-color-tertiary)
+ion-content {
+  --background: black;
+
+  p, li {
+    color: whitesmoke;
+  }
+
+  b {
+    color: var(--ion-color-tertiary)
+  }
 }
+
+

@@ -27,23 +27,17 @@
         </ion-row>
         <ion-row class="ion-text-center">
             <ion-col *ngIf="isNewHighScore">
-                <p>🥳 New highscore! </p>
+                <h2>🥳 New highscore! </h2>
                 <ion-button (click)="captureImage()">
                     Take a Winner selfie!
                 </ion-button>
             </ion-col>
             <ion-col *ngIf="!isNewHighScore">
-                <p>😢 No new highscore</p>
+                <h2>😢 No new highscore</h2>
                 <ion-button (click)="dismissModal()">
                     Try again
                 </ion-button>
             </ion-col>
-        </ion-row>
-        <ion-row>
-            <!--            <ion-col>-->
-            <!--                <p>Highscore holder:</p>-->
-            <!--                <img [src]="highscoreHolderPhoto" *ngIf="highscoreHolderPhoto" alt="photo"/>-->
-            <!--            </ion-col>-->
         </ion-row>
     </ion-grid>
 

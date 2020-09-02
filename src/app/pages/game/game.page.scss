@@ -1,5 +1,9 @@
 ion-content {
   --background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1532446997697-0b92fdc456fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1250&q=80");
+
+  p {
+    color: whitesmoke
+  }
 }
 
 .hidden {
@@ -18,13 +22,19 @@ ion-content {
   box-sizing: content-box;
   text-align: center;
   border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  padding: 18px;
+  width: 50px;
+  height: 50px;
+  padding: 45px;
   border: 2px solid var(--ion-color-secondary);
   background-color: rgba(255, 255, 255, 0.9);
   margin: auto;
-  color: var(--ion-color-primary)
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  p {
+    color: var(--ion-color-primary);
+  }
 }
 
 ion-row {
@@ -36,17 +46,30 @@ ion-button {
 }
 
 .history {
-  text-align: -webkit-center;
+  border-radius: 10%;
+
   div {
     background-color: rgba(255, 255, 255, 0.9);
     width: fit-content;
-    text-align: -webkit-center;
+    margin: auto;
+    border-radius: 10%;
   }
-  .heading {
+
+  .secondary {
     color: var(--ion-color-secondary)
   }
 
   .results {
     color: var(--ion-color-primary)
   }
+}
+
+h1 {
+  color: var(--ion-color-secondary);
+  margin-top: 0;
+}
+
+.fizzBuzz-buttons ion-col {
+  display: flex;
+  flex-direction: column;
 }

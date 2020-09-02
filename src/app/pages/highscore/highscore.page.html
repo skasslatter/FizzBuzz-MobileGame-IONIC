@@ -14,7 +14,7 @@
     </ion-card>
 
     <h2 *ngIf="highscoreHistory && highscoreHistory.length > 1">Past winners</h2>
-    <ion-card *ngFor="let highscore of highscoreHistory">
+    <ion-card *ngFor="let highscore of highscoreHistory.slice(1)">
         <ion-card-header class="ion-text-center">
             <img src='{{highscore.photo}}' alt="photo" class="photo">
             <ion-card-title>Score: {{highscore.score}}</ion-card-title>

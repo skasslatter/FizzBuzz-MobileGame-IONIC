@@ -1,20 +1,33 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      FizzyBuzz
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>
+            FizzyBuzz
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">FizzyBuzz Game</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">FizzyBuzz Game</ion-title>
+        </ion-toolbar>
+    </ion-header>
 
-  <div id="container">
-    <ion-button href="/play">Start a new game</ion-button>
-    <ion-button href="rules">Rules</ion-button>
-  </div>
+    <ion-grid id="container">
+        <ion-row>
+            <ion-col>
+                <ion-button href="/play">Play</ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-button href="rules">Rules</ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-button href="highscores">Highscores</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
