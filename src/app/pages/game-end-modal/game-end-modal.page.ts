@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
-import {Camera, CameraOptions} from "@ionic-native/camera/ngx";
-import {Router} from "@angular/router";
+import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-modal',
-    templateUrl: './modal.page.html',
-    styleUrls: ['./modal.page.scss'],
+    templateUrl: './game-end-modal.page.html',
+    styleUrls: ['./game-end-modal.page.scss'],
 })
 
-export class ModalPage implements OnInit {
+export class GameEndModalPage implements OnInit {
     userPhoto: string;
 
     options: CameraOptions = {
@@ -18,10 +18,10 @@ export class ModalPage implements OnInit {
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE
-    }
+    };
     score: number;
     highscore: number = null;
-    isNewHighScore: boolean = false;
+    isNewHighScore = false;
 
     constructor(
         private modalCtrl: ModalController,
@@ -33,7 +33,6 @@ export class ModalPage implements OnInit {
 
     ngOnInit() {
         // this.storage.clear();
-
         this.storage.get('scoreHistory')
             .then((value) => {
                     if (!value) {
@@ -41,7 +40,7 @@ export class ModalPage implements OnInit {
                         this.highscore = this.score;
                         this.storage.set('scoreHistory', JSON.stringify([{
                             score: this.score
-                        }]))
+                        }]));
                     } else {
                         const history = JSON.parse(value);
                         const latestHighScore = history[0].score;
@@ -51,7 +50,7 @@ export class ModalPage implements OnInit {
                             this.storage.set('scoreHistory', JSON.stringify([
                                 {score: this.score},
                                 ...history
-                            ]))
+                            ]));
                         } else {
                             this.isNewHighScore = false;
                             this.highscore = latestHighScore;
@@ -60,7 +59,7 @@ export class ModalPage implements OnInit {
                 },
                 (err) => {
                     console.log(err);
-                })
+                });
     }
 
     captureImage() {
@@ -74,9 +73,9 @@ export class ModalPage implements OnInit {
                         this.storage.set('scoreHistory', JSON.stringify(history))
                             .then(r => {
                                 this.router.navigate(['/highscores']);
-                                this.dismissModal()
-                            })
-                    })
+                                this.dismissModal();
+                            });
+                    });
             }, (err) => {
                 console.log(err);
             });

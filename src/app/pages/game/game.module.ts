@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { GamePageRoutingModule } from './game-routing.module';
 
 import { GamePage } from './game.page';
-import {PipeModule} from "../../pipes/pipe.module";
+import {PipeModule} from '../../pipes/pipe.module';
 
 @NgModule({
   imports: [

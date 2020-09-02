@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { ModalPageRoutingModule } from './modal-routing.module';
-import { ModalPage } from './modal.page';
+import { ModalPageRoutingModule } from './game-end-modal-routing.module';
+import { GameEndModalPage } from './game-end-modal.page';
 
 
 @NgModule({
@@ -14,7 +14,7 @@ import { ModalPage } from './modal.page';
     IonicModule,
     ModalPageRoutingModule
   ],
-  declarations: [ModalPage]
+  declarations: [GameEndModalPage]
 })
 export class ModalPageModule {
 }

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {first, map, mapTo, scan, share, switchMap, takeLast} from 'rxjs/operators';
 import {fromEvent, interval, merge, Observable, Subscription, zip} from 'rxjs';
-import {CountDownService, FizzBuzzService} from "../../services";
-import {Choice, History} from "../../models";
-import {ModalController} from "@ionic/angular";
-import {ModalPage} from "../game-end-modal/modal.page";
+import {CountDownService, FizzBuzzService} from '../../services';
+import {Choice, History} from '../../models';
+import {ModalController} from '@ionic/angular';
+import {GameEndModalPage} from '../game-end-modal/game-end-modal.page';
 
 function isNumber(val: string): boolean {
     return !isNaN(Number(val));
@@ -33,7 +33,7 @@ export class GamePage implements OnInit {
 
     isRunning = false;
     countDown: number;
-    lives: number = 3;
+    lives = 3;
     userLives: number = this.lives;
     currentUserScore: number;
 
@@ -52,7 +52,7 @@ export class GamePage implements OnInit {
     }
 
     ionViewWillLeave() {
-        this.stopGame()
+        this.stopGame();
     }
 
     getUserInput(): Observable<Choice> {
@@ -62,7 +62,7 @@ export class GamePage implements OnInit {
         this.countDownSubscription = this.countDownService
             .get()
             .subscribe(response => {
-                console.log("countdown", response)
+                console.log('countdown', response);
                 this.countDown = response;
             });
 
@@ -107,7 +107,7 @@ export class GamePage implements OnInit {
                 }
                 return errors;
             }, 0)
-        )
+        );
 
         this.mistakeSubscription = this.errors$
             .subscribe((errors) => {
@@ -115,9 +115,9 @@ export class GamePage implements OnInit {
                     this.openModal(this.currentUserScore)
                         .then(r =>
                             this.stopGame()
-                        )
+                        );
                 }
-            })
+            });
 
         this.userScore$ = isCorrect$.pipe(
             scan((score, isCorrect) => {
@@ -129,7 +129,7 @@ export class GamePage implements OnInit {
 
         this.userScoreSubscription = this.userScore$.subscribe(value => {
             this.currentUserScore = value;
-        })
+        });
 
         this.history$ = zip(
             this.numbers$,
@@ -167,7 +167,7 @@ export class GamePage implements OnInit {
 
     async openModal(currentUserScore: number): Promise<any> {
         const modal = await this.modalCtrl.create({
-            component: ModalPage,
+            component: GameEndModalPage,
             componentProps: {
                 score: currentUserScore,
             }

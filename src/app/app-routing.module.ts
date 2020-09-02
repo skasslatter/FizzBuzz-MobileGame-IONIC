@@ -58,7 +58,7 @@ const routes: Routes = [{
     },
   {
     path: 'game-end-modal',
-    loadChildren: () => import('./pages/game-end-modal/modal.module').then(m => m.ModalPageModule)
+    loadChildren: () => import('./pages/game-end-modal/game-end-modal.module').then(m => m.ModalPageModule)
   }
 ]
 
