@@ -1,0 +1,44 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons fill="outline" slot="end">
+            <ion-button (click)="dismissModal()">
+                Close
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col class="ion-text-center title">
+                <h1>Game over</h1>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="ion-text-center" size="12">
+                <p>Your score:</p>
+                <p><span class="score">{{score}}</span></p>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <p>Highscore: </p>
+                <p><span class="score">{{highscore}}</span></p>
+            </ion-col>
+        </ion-row>
+        <ion-row class="ion-text-center">
+            <ion-col *ngIf="isNewHighScore">
+                <h2>🥳 New highscore! </h2>
+                <ion-button (click)="captureImage()">
+                    Take a Winner selfie!
+                </ion-button>
+            </ion-col>
+            <ion-col *ngIf="!isNewHighScore">
+                <h2>😢 No new highscore</h2>
+                <ion-button (click)="dismissModal()">
+                    Try again
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

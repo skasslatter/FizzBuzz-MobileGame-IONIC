@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Highscore</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="home ion-text-center">
+    <h2 *ngIf="!highscoreHistory">No highscores yet</h2>
+    <h2 *ngIf="highscoreHistory">Current Highscore: {{highscoreHistory[0].score}} Point(s)</h2>
+    <ion-card>
+        <ion-card-header *ngIf="highscoreHistory">
+            <img [src]="highscoreHistory[0].photo" *ngIf="highscoreHistory[0].photo" alt="photo"/>
+        </ion-card-header>
+    </ion-card>
+
+    <h2 *ngIf="highscoreHistory && highscoreHistory.length > 1">Past winners</h2>
+    <ion-card *ngFor="let highscore of highscoreHistory.slice(1)">
+        <ion-card-header class="ion-text-center">
+            <img src='{{highscore.photo}}' alt="photo" class="photo">
+            <ion-card-title>Score: {{highscore.score}}</ion-card-title>
+        </ion-card-header>
+    </ion-card>
+</ion-content>
