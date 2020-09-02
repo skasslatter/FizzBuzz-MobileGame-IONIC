@@ -22,7 +22,7 @@ export class HighscorePage implements OnInit {
     ngOnInit() {
     }
 
-    ionViewWillEnter() {
+    ionViewWillEnter(): void {
         this.storage.get('scoreHistory')
             .then((value) => {
                 this.highscoreHistory = JSON.parse(value);

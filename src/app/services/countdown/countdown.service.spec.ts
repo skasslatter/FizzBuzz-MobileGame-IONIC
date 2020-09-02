@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CountdownService } from './countdown.service';
+import { CountDownService } from './countdown.service';
 
 describe('CountdownService', () => {
-  let service: CountdownService;
+  let service: CountDownService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CountdownService);
+    service = TestBed.inject(CountDownService);
   });
 
   it('should be created', () => {
