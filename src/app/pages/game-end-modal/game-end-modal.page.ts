@@ -33,7 +33,7 @@ export class GameEndModalPage implements OnInit {
     }
 
     ngOnInit() {
-        this.storage.clear();
+        // this.storage.clear();
         this.storage.get('scoreHistory')
             .then((value) => {
                     if (!value) {
@@ -63,7 +63,7 @@ export class GameEndModalPage implements OnInit {
                 });
     }
 
-    captureImage() {
+    captureImage(): void {
         this.camera.getPicture(this.options)
             .then((imageData) => {
                 this.userPhoto = 'data:image/jpeg;base64,' + imageData;
@@ -82,11 +82,11 @@ export class GameEndModalPage implements OnInit {
             });
     }
 
-    dismissModal() {
+    dismissModal(): void {
         this.modalCtrl.dismiss();
     }
 
-    focusOutFunction() {
+    focusOutFunction(): void {
         this.storage.get('scoreHistory')
             .then(value => {
                 const history = JSON.parse(value);
