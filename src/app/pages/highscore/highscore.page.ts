@@ -27,8 +27,6 @@ export class HighscorePage implements OnInit {
         this.storage.get('scoreHistory')
             .then((value) => {
                 this.highscoreHistory = JSON.parse(value);
-                console.log('highscoreHistory', this.highscoreHistory);
-                console.log('highscoreHistory[0]', this.highscoreHistory[0]);
             });
     }
 }

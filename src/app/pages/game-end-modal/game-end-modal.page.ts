@@ -33,7 +33,7 @@ export class GameEndModalPage implements OnInit {
     }
 
     ngOnInit() {
-        // this.storage.clear();
+        this.storage.clear();
         this.storage.get('scoreHistory')
             .then((value) => {
                     if (!value) {
@@ -87,7 +87,6 @@ export class GameEndModalPage implements OnInit {
     }
 
     focusOutFunction() {
-        console.log('focusOutFunction', this.userName);
         this.storage.get('scoreHistory')
             .then(value => {
                 const history = JSON.parse(value);

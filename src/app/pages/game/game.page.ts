@@ -62,7 +62,6 @@ export class GamePage implements OnInit {
         this.countDownSubscription = this.countDownService
             .get()
             .subscribe(response => {
-                console.log('countdown', response);
                 this.countDown = response;
             });
 
