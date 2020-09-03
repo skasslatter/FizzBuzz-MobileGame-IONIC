@@ -8,10 +8,10 @@
     <section>
         <ion-row class="ion-text-center">
             <ion-col *ngIf="!isRunning" class="start">
-                <ion-button (click)="startGame()">START</ion-button>
+                <ion-button (click)="startGame()" shape="round" size="large">START</ion-button>
             </ion-col>
             <ion-col *ngIf="isRunning" class="ion-text-end">
-                <ion-button (click)="stopGame()">RESET</ion-button>
+                <ion-button (click)="stopGame()" shape="round">RESET</ion-button>
             </ion-col>
         </ion-row>
         =
@@ -38,12 +38,12 @@
 
             <ion-row class="fizzBuzz-buttons">
                 <ion-col>
-                    <ion-button id="nr-btn">{{numbers$ | async}}</ion-button>
-                    <ion-button id="buzz-btn">Buzz</ion-button>
+                    <ion-button id="nr-btn" shape="round">{{numbers$ | async}}</ion-button>
+                    <ion-button id="buzz-btn" shape="round">Buzz</ion-button>
                 </ion-col>
                 <ion-col>
-                    <ion-button id="fizz-btn">Fizz</ion-button>
-                    <ion-button id="fizzBuzz-btn">FizzBuzz</ion-button>
+                    <ion-button id="fizz-btn" shape="round">Fizz</ion-button>
+                    <ion-button id="fizzBuzz-btn" shape="round">FizzBuzz</ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>
