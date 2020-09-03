@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
 
 interface Highscore {
+    name: string;
     score: number;
     photo: string;
 }
@@ -27,6 +28,7 @@ export class HighscorePage implements OnInit {
             .then((value) => {
                 this.highscoreHistory = JSON.parse(value);
                 console.log('highscoreHistory', this.highscoreHistory);
+                console.log('highscoreHistory[0]', this.highscoreHistory[0]);
             });
     }
 }

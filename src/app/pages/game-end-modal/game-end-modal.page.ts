@@ -11,14 +11,14 @@ import {Router} from '@angular/router';
 })
 
 export class GameEndModalPage implements OnInit {
-    userPhoto: string;
-
     options: CameraOptions = {
         quality: 30,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE
     };
+    userPhoto: string;
+    userName: string;
     score: number;
     highscore: number = null;
     isNewHighScore = false;
@@ -83,5 +83,17 @@ export class GameEndModalPage implements OnInit {
 
     dismissModal() {
         this.modalCtrl.dismiss();
+    }
+
+    focusOutFunction() {
+        console.log('focusOutFunction', this.userName);
+        this.storage.get('scoreHistory')
+            .then(value => {
+                const history = JSON.parse(value);
+                history[0].name = this.userName;
+                this.storage.set('scoreHistory', JSON.stringify(history));
+            }, (err) => {
+                console.log(err);
+            });
     }
 }
